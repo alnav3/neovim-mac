@@ -28,3 +28,6 @@ vim.opt.updatetime = 50
 
 vim.api.nvim_set_var('terminal_scrollback_buffer_size', 30000)
 
+vim.api.nvim_create_user_command('W', 'w', {})
+vim.api.nvim_create_user_command('Q', 'q', {})
+
