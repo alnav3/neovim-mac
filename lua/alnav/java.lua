@@ -59,14 +59,14 @@ vim.cmd([[
 function! OpenJavaTerminalWithScrollback()
     " Abre la terminal en una nueva pestaña
     tabnew | term java @dependencies
-    
+
     " Establece scrollback para esta terminal
     setlocal scrollback=-1
 endfunction
 
 ]])
 if vim.fn.has("win32") == 1 then
-    -- utilizamos un file dentro del proyecto para saltarnos el limite de caracteres en la terminal 
+    -- utilizamos un file dentro del proyecto para saltarnos el limite de caracteres en la terminal
     -- Maven Start Normal
     vim.api.nvim_set_keymap('n', '<Leader>msn', ':call OpenJavaTerminalWithScrollback()<CR>', { noremap = true, silent = true })
 
@@ -75,12 +75,21 @@ if vim.fn.has("win32") == 1 then
 
 else
     -- Maven Start Normal
-    vim.api.nvim_set_keymap('n', '<Leader>msn', ':lua vim.run_in_new_tab("mvn spring-boot:run")<CR>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<Leader>msn', ':lua CheckProjectFilesAndRun()<CR>', { noremap = true, silent = true })
 
     -- Maven Start Modo Debug
     vim.api.nvim_set_keymap('n', '<Leader>msd', ':lua vim.run_in_new_tab("mvn spring-boot:run -Dspring-boot.run.jvmArguments=\'-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005\'")<CR>', { noremap = true, silent = true })
 end
 
+function CheckProjectFilesAndRun()
+    if vim.fn.glob("*.go") ~= "" then
+        -- Se encontró un archivo .go, ejecutar Go
+        vim.cmd("lua vim.run_in_new_tab(\"air\")")
+    else
+        -- Se encontró pom.xml, ejecutar Maven
+        vim.cmd("lua vim.run_in_new_tab(\"mvn spring-boot:run\")")
+    end
+end
 
 -- Maven Test Class Normal
 vim.api.nvim_set_keymap('n', '<Leader>mtc', ':lua vim.run_in_new_tab("mvn test -Dtest=" .. vim.fn.expand("%:t:r"))<CR>', { noremap = true, silent = true })

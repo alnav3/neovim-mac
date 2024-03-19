@@ -13,7 +13,7 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {},
         keys = {
-            {"<leader>t", "<cmd>TroubleToggle<cr>", mode = "n"}
+            {"<leader>tt", "<cmd>TroubleToggle<cr>", mode = "n"},
         }
     },
     { "nvim-tree/nvim-web-devicons" },

@@ -1,4 +1,4 @@
-local function setup_lualine()
+function Setup_lualine()
     require('lualine').setup {
         options = {
             icons_enabled = true,
@@ -74,7 +74,7 @@ return {
         "nvim-lualine/lualine.nvim",
         lazy = false,
         priority = 999,
-        config = setup_lualine
+        config = Setup_lualine
     },
     {
         "TaDaa/vimade",

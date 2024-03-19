@@ -14,6 +14,7 @@ return {
         "rcarriga/nvim-dap-ui",
     },
     config = function()
+        vim.filetype.add({ extension = { templ = "templ" } })
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
@@ -52,8 +53,27 @@ return {
                             bundles = {
                                 vim.fn.glob(vim.fn.stdpath('data') .. "/mason/packages/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
                             }
-                        }
+                        },
                     }
+                end,
+                ["html"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.html.setup({
+                        filetypes = { "html", "templ" },
+                    })
+                end,
+                ["tailwindcss"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.tailwindcss.setup({
+                        filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+                        init_options = { userLanguages = { templ = "html" } },
+                    })
+                end,
+                ["htmx"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.htmx.setup({
+                        filetypes = { "html", "templ" },
+                    })
                 end,
             }
         })
